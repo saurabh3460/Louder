@@ -1,0 +1,293 @@
+{%extends "base.html"%}
+{%load static%}
+{%block head %}
+<script type="text/javascript" src="{% static 'js/pot_1.js'%}"></script>
+<script src="{% static 'js/jquery.form.min.js'%}"></script>
+<link href="https://fonts.googleapis.com/css?family=Zilla+Slab+Highlight|Zilla+Slab:400,500" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister" rel="stylesheet">
+{%endblock%}
+{%block style%}
+.main_head{
+  background-color:trasparent;
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image:url({% static 'image/Forests-2.jpg'%});//linear-gradient(to bottom right,#d533a6,#ed22b2);
+}
+.head{
+  background-color:trasparent;
+  display: inline-flex;
+}
+.logoName{
+  margin-left:5px;
+}
+.list{
+  display:flex;
+  flex-direction: row-reverse;
+
+}
+.list ul{
+  display:flex;
+  flex-direction: row;
+  position: absolute;
+  right: 0;
+  margin-right: 19px;
+  top: 20%;
+}
+ .list ul a{
+  text-decoration: none;
+  border:1px solid white;
+  border-radius:5px;
+  margin-left:7px;
+  font-size:15px;
+
+  color:white;
+  display:block;
+  padding:5px;
+  font-family:'Zilla Slab', serif;
+}
+.list ul a:hover{
+  border:1px solid #66cbf3;
+  color:#66cbf3;
+  text-decoration: none;
+}
+/*                      Main Body                      */
+.content{
+  background-color:white;
+  height:100%;
+}
+.songs{
+  overflow:auto;
+  height:100%;
+  margin-top:1px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-image:url({%static 'image/couple.jpg'%});
+}
+#add_song{
+  overflow:auto;
+  margin-top:1px;
+  background-size:cover;
+  background-repeat:   no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-image:url({%static 'image/main.jpg'%});
+}
+.main_cover{
+  width: 100%;
+  padding:5px;
+  border-radius:5px;
+  text-align:center;
+  background-color: #2f7c91b3;
+}
+ .cover {
+}
+.play-button{
+  box-shadow: 3px 3px 20px 0px white;
+  margin-top: 30px;
+  width:50px;
+  height:50px;
+  border-radius:60%;
+}
+.play-button:hover{
+  box-shadow: 3px 3px 20px 0px #fd9c57;
+}
+.footer{
+  right:0;
+  background-image:linear-gradient(#4a6069,#22292c);
+}
+.flink ul{
+  margin:0;
+  display:block;
+  display:flex;
+  flex-direction:row;
+}
+.flink ul li{
+  display:inline-flex;
+  text-decoration:none;
+  color:white;
+}
+.facebook{
+  background-image:url({%static 'image/facebook.svg'%});
+}
+.github{
+  background-image:url({%static 'image/GitHub-Mark-120px-plus.png'%});
+}
+.linkedin{
+  background-image:url({%static 'image/linkedin.svg'%});
+}
+.facebook,  .linkedin,.github {
+  height:30px;
+  width:30px;
+  margin:5px;
+  border-radius:4px;
+  border:0.1pt solid white;
+  background-color:white;
+  background-size:cover;
+  background-repeat: no-repeat;
+}
+{%endblock%}
+{%block title%}SoundPot|{% if not user.is_authenticated%}Public{%endif%}{%endblock%}
+{%block content%}
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-dark container main_head">
+    <a class="navbar-brand ml-1" href="https://www.blueheartlab.com/">
+    <img src="{%static "image/blue-heart-logo.png"%}" width="50" height="50" alt="blue heart lab" style="background-color: #66cbf3;border-radius: 7px;padding: 3px;box-shadow: 3px 3px 20px 0px #66cbf3; border: 1px solid #228ab4;">
+  </a>
+  <a class="navbar-brand" href="#" style="font-size:35px; color:#66cbf3; font-family:'Love Ya Like A Sister', cursive;background-color: #0009; padding: 2px;">SoundPot</a>
+  <button class="navbar-toggler bg-light" type="button"
+          data-toggle="collapse" data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false"
+          aria-label="Toggle navigation" style="background-color: #c2bb57 !important;">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto">
+      <a class="nav-item nav-link active" href="https://www.billboard.com/charts/hot-100" style="color:white; margin-left:2px; font-weight: bolder;">Top Songs</a>
+      {%if user.is_authenticated %}
+      <a class="nav-item nav-link active" href="#add-form" style="color:white; margin-left:2px; font-weight: bolder;">Add Song</a>
+      {%endif%}
+      <a class="nav-item nav-link active" href="#about" style="color:white; margin-left:2px; font-weight: bolder;">About</a>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container content">
+    <div class="row songs justify-content-center">
+      {%for song in songs%}
+      <div class="col- m-3 p-0">
+          <div class="main_cover" id="main_">
+
+              <div class="cover" style="height:100px;width:100px;background-size:cover;
+                                        background-position: center center;
+                                        background-image:url(media/{{song.image}}); text-align:center; ">
+                <a href="#" class="play-link" id="{{song.id}}"><img src="{%static 'image/play-button.svg'%}" class="play-button"></a>
+              </div>
+              <div class="album_content">
+                <h5 class="card-title" style="font-family:Zilla Slab Highlight; color:white; margin-top:1px; font-size: 15px;" >{{song.album|truncatechars:14}}</h5>
+                  <div class="{{song.id}}">
+                  </div>
+              </div>
+              <span class="badge badge-light mt-0">{{song.language}}</span>
+              {%if user.is_authenticated%}
+                <span class="badge badge-danger mt-0">
+                  <a href="#" class="delete" id="{{song.id}}" style="text-decoration:none; color:black;">Delete</a>
+                </span>
+              {%endif%}
+          </div>
+        </div>
+        {%endfor%}
+      </div>
+</div>
+<section class="container p-4 " id="add_song">
+  <div class="row justify-content-center " >
+        <div class="col- m-2" style=" overflow: auto; height:500px; background-color:transparent;border-radius:5px;">
+          <div class="row m-0" >
+            {% for quote,author in quotes.items%}
+            <div class="col- m-2 p-1" style="display:block; overflow: auto;  background-color:#c58210;border-radius:5px;">
+              <p style="font-family:Zilla Slab; color:white; font-size:20px;">
+                 <i>{{quote}}</i>
+              </p>
+              <h5 style="margin-left:5px;">-{{author}}</h5>
+            </div>
+            {%endfor%}
+          </div>
+        </div>
+        {%if user.is_authenticated %}
+        <div class="col- p-5" style="right:0; background-color:#b39e2666;border-radius:5px;">
+          <form enctype="multipart/form-data" action="/" method="POST" id="add-form">
+            {%csrf_token%}
+            <!--The enctype attribute specifies how the form-data should be encoded when submitting it to the server.
+            application/x-www-form-urlencoded   Default. All characters are encoded before sent (spaces are converted to "+" symbols, and special characters are converted to ASCII HEX values)
+            multipart/form-data   No characters are encoded. This value is required when you are using forms that have a file upload control
+            text/plain  Spaces are converted to "+" symbols, but no special characters are encoded
+          -->
+              <div class="form-group">
+                <input type="text" class="form-control" name="album" id="album" placeholder="Enter Album Name" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="artist" id="artist" placeholder="Enter Artist Name" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="language" id="language" placeholder="Enter Language" required>
+              </div>
+              <div class="form-group">
+                <label for="image">Attach Album's Image</label>
+                <input type="file" name="image" id="image" required>
+              </div>
+              <div class="form-group">
+                <label for="song">Attach Album's Song</label>
+                <input type="file" name="song" id="song" required>
+              </div>
+              <div class="form-group">
+                <label for="gener">Gener</label>
+                <select class="" name="genre" id="genre" >
+                  <option>Alternative Music</option>
+                  <option>Blues</option>
+                  <option>Classical Music</option>
+                  <option>Country Music</option>
+                  <option>Dance Music</option>
+                  <option>Easy Listening</option>
+                  <option>Electronic Music</option>
+                  <option>European Music (Folk / Pop)</option>
+                  <option>Hip Hop / Rap</option>
+                  <option>Indie Pop</option>
+                  <option>Inspirational (incl. Gospel)</option>
+                  <option>Asian Pop (J-Pop, K-pop)</option>
+                  <option>Jazz</option>
+                  <option>Latin Music</option>
+                  <option>New Age</option>
+                  <option>Opera</option>
+                  <option>Pop (Popular music)</option>
+                  <option>R&B / Soul</option>
+                  <option>Reggae</option>
+                  <option>Rock</option>
+                  <option>Singer / Songwriter (inc. Folk)</option>
+                  <option>World Music / Beats</option>
+                  <option>Gazal</option>
+
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary " id="Add_Song">ADD SONG</button>
+            </form>
+            <div class="progress mt-1">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+            </div>
+        </div>
+        {%endif%}
+    </div>
+</section>
+
+<section class="container footer mt-1" id="about">
+    <div class="row ">
+      <div class="col-12 ml-1">
+        <div class="flink mt-2 ">
+          <ul type="NONE">
+            <a href="https://www.facebook.com/yadav.singh.9406" class="facebook" target="blank"><li></li></a>
+            <a href="https://github.com/saurabh3460" class="github" target="blank" ><li></li></a>
+            <a href="https://www.linkedin.com/in/saurabh-yadav-311635114/" class="linkedin" target="blank"><li></li></a>
+          </ul>
+        </div>
+        <div class="mt-0" style="">
+          <p style="font-family:Zilla Slab; color:white; display:block; font-size:18px;">
+            A Music Store web application powered by <strong style="color:#129b41;">Django</strong>.<br>
+            Designed and built with all the love in the world. Maintained by the core team at <span class="badge badge-light"><a href="https://www.blueheartlab.com/" style="text-decoration:none;" target='blank'>Blue Heart Lab</a></span>.
+            Currently v1.0.0-stable.<br>
+            <i>Code licensed MIT, docs CC BY 3.0.</i>
+          </p>
+        </div>
+      </div>
+
+    </div>
+</section>
+
+<div class="fixed-bottom container">
+  <audio controls autoplay style="width:100%;"   id="player" >
+      <source src="" type="audio/mpeg" id="playIt">
+  </audio>
+</div>
+{%endblock%}

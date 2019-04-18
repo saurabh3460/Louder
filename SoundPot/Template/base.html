@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {%load staticfiles %}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{%block title%}Potyfy{%endblock%}</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css'%}">
+
+  <script type="text/javascript" src="{% static "jquery-3.3.1.min.js"%}"></script>
+  <script type="text/javascript" src="{% static "bootstrap.min.js"%}"></script>
+  <script type="text/javascript" src="{% static "EasyFont.js"%}"></script>
+
+  <style media="screen">
+
+  html,body{
+    height: 100%;
+    overflow: auto;
+    background-color: #f2f2f2;
+  }
+  {%block style%}
+
+  {%endblock%}
+  </style>
+  {%block head%}
+
+    {%endblock%}
+</head>
+<body>
+
+{%block content%}
+
+{%endblock%}
+
+</body>
+</html>
